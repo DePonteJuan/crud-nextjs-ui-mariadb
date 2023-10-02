@@ -182,7 +182,13 @@ export default function App() {
                     />
                   </>
                 ))}
-                <Button />
+                <Button
+                  className="bg-foreground text-background"
+                  endContent={<PlusIcon width={undefined} height={undefined} />}
+                  size="sm"
+                >
+                  Agregar
+                </Button>
               </PopoverContent>
             </Popover>
           </div>
@@ -248,7 +254,7 @@ export default function App() {
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody emptyContent={"No users found"} items={filteredItems}>
+        <TableBody emptyContent={"usuario no encontrado..."} items={filteredItems}>
           {(item) => (
             <TableRow key={item.id}>
               {(columnKey) => (
