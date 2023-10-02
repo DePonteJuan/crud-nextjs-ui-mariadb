@@ -1,4 +1,3 @@
-"use client";
 import {
   ChipProps,
   User,
@@ -35,6 +34,7 @@ import { columns, users } from "./data";
 import { PlusIcon } from "./icons/PlusIcon";
 import { SearchIcon } from "./icons/SearchIcon";
 import { VerticalDotsIcon } from "./icons/VerticalDotsIcon";
+import { conn } from "@/libs/mysql";
 
 const statusColorMap: Record<string, ChipProps["color"]> = {
   student: "success",
@@ -43,19 +43,36 @@ const statusColorMap: Record<string, ChipProps["color"]> = {
 };
 type User = (typeof users)[0];
 
-export default function App() {
+async function loadEstudiantes() {
+  const estudiantes = await conn.query("SELECT * FROM product");
+  return estudiantes;
+}
+export default async function App() {
   const [filterValue, setFilterValue] = React.useState("");
   const hasSearchFilter = Boolean(filterValue);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const [showModal, setShowModal] = useState(false);
   const [selectedItemId, setSelectedItemId] = useState(null);
   const handleDropdownSelect = (selectedItem) => {
-    setShowModal(true);
     setSelectedItemId(selectedItem);
     console.log(selectedItem);
     onOpen();
   };
+  //new Code
+  // const [columns, setcolumns] = useState({});
+  const estudiantes = await loadEstudiantes()/*.then((estudiantes) => {
+    Object.keys(estudiantes).forEach((key) => {
+      if (key !== "id") {
+        setcolumns((prevState) => ({
+          ...prevState,
+          name: key.toUpperCase(),
+          uid: key,
+        }));
+      }
+    });
+  });*/
+  console.log(estudiantes)
+
   const onSearchChange = React.useCallback((value?: string) => {
     if (value) {
       setFilterValue(value);
@@ -173,7 +190,7 @@ export default function App() {
                 {columns.map((column) => (
                   <>
                     <Input
-                      defaultValue={''}
+                      defaultValue={""}
                       label={column.name}
                       key={column.uid}
                       size="md"
@@ -254,7 +271,10 @@ export default function App() {
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody emptyContent={"usuario no encontrado..."} items={filteredItems}>
+        <TableBody
+          emptyContent={"usuario no encontrado..."}
+          items={filteredItems}
+        >
           {(item) => (
             <TableRow key={item.id}>
               {(columnKey) => (
@@ -272,9 +292,12 @@ export default function App() {
               <ModalBody>
                 {columns.map((column) => (
                   <Input
-
-                  defaultValue={selectedItemId ? selectedItemId[column.uid] : ""}
-                  placeholder={selectedItemId ? selectedItemId[column.uid] : ""}
+                    defaultValue={
+                      selectedItemId ? selectedItemId[column.uid] : ""
+                    }
+                    placeholder={
+                      selectedItemId ? selectedItemId[column.uid] : ""
+                    }
                     label={column.name}
                     key={column.uid}
                     size="md"
