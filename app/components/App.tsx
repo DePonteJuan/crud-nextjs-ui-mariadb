@@ -1,54 +1,89 @@
-'use client'
-import { ChipProps, User, Chip, Dropdown, DropdownTrigger, Button, DropdownMenu, DropdownItem, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Input } from '@nextui-org/react';
-import React from 'react';
-import {columns, users} from "./data";
-import { PlusIcon } from './icons/PlusIcon';
-import { SearchIcon } from './icons/SearchIcon';
-import { VerticalDotsIcon } from './icons/VerticalDotsIcon';
+"use client";
+import {
+  ChipProps,
+  User,
+  Chip,
+  Dropdown,
+  DropdownTrigger,
+  Button,
+  DropdownMenu,
+  DropdownItem,
+  Table,
+  TableHeader,
+  TableColumn,
+  TableBody,
+  TableRow,
+  TableCell,
+  Input,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@nextui-org/react";
 
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+  Checkbox,
+  Link,
+} from "@nextui-org/react";
+import React, { useState } from "react";
+import { columns, users } from "./data";
+import { PlusIcon } from "./icons/PlusIcon";
+import { SearchIcon } from "./icons/SearchIcon";
+import { VerticalDotsIcon } from "./icons/VerticalDotsIcon";
 
-const statusColorMap: Record<string, ChipProps["color"]>  = {
+const statusColorMap: Record<string, ChipProps["color"]> = {
   student: "success",
   teacher: "danger",
   admin: "warning",
 };
-
-type User = typeof users[0];
+type User = (typeof users)[0];
 
 export default function App() {
   const [filterValue, setFilterValue] = React.useState("");
   const hasSearchFilter = Boolean(filterValue);
-  
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const [showModal, setShowModal] = useState(false);
+  const [selectedItemId, setSelectedItemId] = useState(null);
+  const handleDropdownSelect = (selectedItem) => {
+    setShowModal(true);
+    setSelectedItemId(selectedItem);
+    console.log(selectedItem);
+    onOpen();
+  };
   const onSearchChange = React.useCallback((value?: string) => {
     if (value) {
       setFilterValue(value);
     } else {
       setFilterValue("");
     }
-    }, []);
-      
-    const filteredItems = React.useMemo(() => {
-      let filteredUsers = [...users];
-  
-      if (hasSearchFilter) {
-        filteredUsers = filteredUsers.filter((user) =>
-          user.name.toLowerCase().includes(filterValue.toLowerCase()),
-        );
-      }
-  
-      return filteredUsers;
-    }, [users, filterValue]);
-    
-    
+  }, []);
 
-    const renderCell = React.useCallback((user: User, columnKey: React.Key) => {
-      const cellValue = user[columnKey as keyof User];
+  const filteredItems = React.useMemo(() => {
+    let filteredUsers = [...users];
+
+    if (hasSearchFilter) {
+      filteredUsers = filteredUsers.filter((user) =>
+        user.name.toLowerCase().includes(filterValue.toLowerCase()),
+      );
+    }
+
+    return filteredUsers;
+  }, [users, filterValue]);
+
+  const renderCell = React.useCallback((user: User, columnKey: React.Key) => {
+    const cellValue = user[columnKey as keyof User];
     switch (columnKey) {
       case "name":
         return (
           <User
-          avatarProps={{radius: "full", size: "sm", src: user.avatar}}
-          classNames={{
+            avatarProps={{ radius: "full", size: "sm", src: user.avatar }}
+            classNames={{
               description: "text-default-500",
             }}
             description={user.email}
@@ -61,7 +96,9 @@ export default function App() {
         return (
           <div className="flex flex-col">
             <p className="text-bold text-small capitalize">{cellValue}</p>
-            <p className="text-bold text-tiny capitalize text-default-500">{user.team}</p>
+            <p className="text-bold text-tiny capitalize text-default-500">
+              {user.team}
+            </p>
           </div>
         );
       case "status":
@@ -81,12 +118,19 @@ export default function App() {
             <Dropdown className="bg-background border-1 border-default-200">
               <DropdownTrigger>
                 <Button isIconOnly radius="full" size="sm" variant="light">
-                          <VerticalDotsIcon className="text-default-400" width={undefined} height={undefined} /> 
+                  <VerticalDotsIcon
+                    className="text-default-400"
+                    width={undefined}
+                    height={undefined}
+                  />
                 </Button>
               </DropdownTrigger>
               <DropdownMenu>
-                <DropdownItem>Edit</DropdownItem>
-                <DropdownItem>Delete</DropdownItem>
+                <DropdownItem>
+                  <li onClick={() => handleDropdownSelect(user)}>Editar</li>
+                </DropdownItem>
+
+                <DropdownItem>Eliminar</DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </div>
@@ -106,7 +150,7 @@ export default function App() {
               base: "w-full sm:max-w-[44%]",
               inputWrapper: "border-1",
             }}
-            placeholder="Search by name..."
+            placeholder="Buscar por nombre..."
             size="sm"
             startContent={<SearchIcon className="text-default-300" />}
             value={filterValue}
@@ -115,23 +159,38 @@ export default function App() {
             onValueChange={onSearchChange}
           />
           <div className="flex gap-3">
-            <Button
-              className="bg-foreground text-background"
-              endContent={<PlusIcon width={undefined} height={undefined} />}
-              size="sm"
-            >
-              Add New
-            </Button>
-          </div>
+            <Popover placement="bottom" showArrow offset={10}>
+              <PopoverTrigger>
+                <Button
+                  className="bg-foreground text-background"
+                  endContent={<PlusIcon width={undefined} height={undefined} />}
+                  size="sm"
+                >
+                  Agregar
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-[250px]">
+                {columns.map((column) => (
+                  <>
+                    <Input
+                      defaultValue={''}
+                      label={column.name}
+                      key={column.uid}
+                      size="md"
+                      variant="bordered"
+                      required
+                    />
+                  </>
+                ))}
+                <Button />
+              </PopoverContent>
+            </Popover>
           </div>
         </div>
-        )
-          },[
-            filterValue,
-            onSearchChange,
-            hasSearchFilter,
-          ]);
-          
+      </div>
+    );
+  }, [filterValue, onSearchChange, hasSearchFilter]);
+
   const classNames = React.useMemo(
     () => ({
       wrapper: ["max-h-[382px]", "max-w-3xl"],
@@ -150,37 +209,86 @@ export default function App() {
     }),
     [],
   );
-        
-  return (
-    <Table
-      isCompact
-      removeWrapper
-      aria-label="Example table with custom cells, pagination and sorting"
-   
-      classNames={classNames}
-      selectionMode="multiple"
-      topContent={topContent}
-      topContentPlacement="outside"
-    >
-      <TableHeader columns={columns}>
-        {(column) => (
-          <TableColumn
+  //creando el efecto de pop-up al hacer click
+  const popUp = React.useMemo(() => {
+    return (
+      <PopoverContent className="w-[250px]">
+        {columns.map((column) => (
+          <Input
+            defaultValue={""}
+            label={column.name}
             key={column.uid}
-            align={column.uid === "actions" ? "center" : "start"}
-          >
-            {column.name}
-          </TableColumn>
-        )}
-      </TableHeader>
-      <TableBody emptyContent={"No users found"} items={filteredItems}>
-        {(item) => (
-          <TableRow key={item.id}>
-            {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
-          </TableRow>
-        )}
-      </TableBody>
-    </Table>  
-    
-    
+            size="md"
+            variant="bordered"
+            required
+          />
+        ))}
+        <Button />
+      </PopoverContent>
+    );
+  }, []);
+
+  return (
+    <>
+      <Table
+        isCompact
+        removeWrapper
+        aria-label="Example table with custom cells, pagination and sorting"
+        classNames={classNames}
+        topContent={topContent}
+        topContentPlacement="outside"
+      >
+        <TableHeader columns={columns}>
+          {(column) => (
+            <TableColumn
+              key={column.uid}
+              align={column.uid === "actions" ? "center" : "start"}
+            >
+              {column.name}
+            </TableColumn>
+          )}
+        </TableHeader>
+        <TableBody emptyContent={"No users found"} items={filteredItems}>
+          {(item) => (
+            <TableRow key={item.id}>
+              {(columnKey) => (
+                <TableCell>{renderCell(item, columnKey)}</TableCell>
+              )}
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+      <Modal isOpen={isOpen} onClose={onClose} placement="top-center">
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">Editar</ModalHeader>
+              <ModalBody>
+                {columns.map((column) => (
+                  <Input
+
+                  defaultValue={selectedItemId ? selectedItemId[column.uid] : ""}
+                  placeholder={selectedItemId ? selectedItemId[column.uid] : ""}
+                    label={column.name}
+                    key={column.uid}
+                    size="md"
+                    variant="bordered"
+                    required
+                  />
+                ))}
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="flat" onPress={onClose}>
+                  Cerrar
+                </Button>
+                <Button color="primary" onPress={onClose}>
+                  Cambiar
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+    </>
   );
 }
