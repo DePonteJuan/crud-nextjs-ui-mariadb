@@ -1,5 +1,4 @@
-"use client";
-import App from "./components/App";
+import EstudiantesPage from "./components/App";
 export default function Home() {
-  return <App />;
+  return <EstudiantesPage />;
 }
