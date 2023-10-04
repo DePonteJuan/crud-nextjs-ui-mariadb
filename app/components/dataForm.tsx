@@ -6,19 +6,14 @@ import { Button, Input } from "@nextui-org/react";
 import { PlusIcon } from "./icons/PlusIcon";
 
 function ProductForm({columns, selectedItemId,  routingLink}) {
-    if (selectedItemId == {}){
-        const initialProduct = {}
-        columns.map((column) => {
-            console.log(column)
-                 initialProduct[column.uid] = column.name
-                 return null
-            
-        })
-        console.log(initialProduct)
-    }
-  const [product, setProduct] = useState(selectedItemId ? selectedItemId : Object.assign({}, ...Object.keys(columns)
+    const transformedColumns = columns.reduce((acc, column) => {
+        acc[column.uid] = column.name;
+        return acc;
+      }, {});
+
+  const [product, setProduct] = useState(selectedItemId ? selectedItemId : Object.assign({}, ...Object.keys(transformedColumns)
   .filter(key => key !== 'ACCIONES')
-  .map(key => ({ [key]: columns[key] }))));
+  .map(key => ({ [key]: transformedColumns[key] }))));
   
   //console.log(product)
   const form = useRef(null);
