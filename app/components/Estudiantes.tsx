@@ -36,6 +36,7 @@ import { PlusIcon } from "./icons/PlusIcon";
 import { SearchIcon } from "./icons/SearchIcon";
 import { VerticalDotsIcon } from "./icons/VerticalDotsIcon";
 import { conn } from "@/libs/mysql";
+import ProductForm from "./dataForm";
 
 const statusColorMap: Record<string, ChipProps["color"]> = {
   student: "success",
@@ -170,7 +171,7 @@ export default function Estudiantes({estudiantesData, columns}) {
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-[250px]">
-                {columns.map((column) => (
+                {/*columns.map((column) => (
                   <>
                     <Input
                       defaultValue={""}
@@ -181,7 +182,8 @@ export default function Estudiantes({estudiantesData, columns}) {
                       required
                     />
                   </>
-                ))}
+                ))*/}
+                < ProductForm columns={columns} selectedItemId={selectedItemId} routingLink={"estudiantes/"}/>
                 <Button
                   className="bg-foreground text-background"
                   endContent={<PlusIcon width={undefined} height={undefined} />}
@@ -248,7 +250,7 @@ export default function Estudiantes({estudiantesData, columns}) {
           {(column) => (
             <TableColumn
               key={column.uid}
-              align={column.uid === "actions" ? "center" : "start"}
+              align={column.uid === "acciones" ? "center" : "start"}
             >
               {column.name}
             </TableColumn>

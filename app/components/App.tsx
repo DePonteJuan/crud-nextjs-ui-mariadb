@@ -8,7 +8,7 @@ const columnas = [
   {name: "TELEFONO", uid: "telefono"},
   {name: "CEDULA", uid: "cedula_de_identidad"},
   {name: "FECHA_DE_ADMISION", uid: "fecha_de_admision"},
-  {name: "ACTIONS", uid: "actions"},
+  {name: "ACCIONES", uid: "acciones"},
 ];
 async function loadEstudiantes() {
   const estudiantes = await conn.query("SELECT * FROM estudiantes");

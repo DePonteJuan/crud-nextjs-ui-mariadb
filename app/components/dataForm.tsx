@@ -2,11 +2,25 @@
 import { useRef, useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter, useParams } from "next/navigation";
+import { Button, Input } from "@nextui-org/react";
+import { PlusIcon } from "./icons/PlusIcon";
 
-function productForm({columns, selectedItemId }) {
-  const [product, setProduct] = useState(selectedItemId ? selectedItemId : columns);
-  dataStructureKeys = dataStructure ? Object.keys(dataStructure) : null
+function ProductForm({columns, selectedItemId,  routingLink}) {
+    if (selectedItemId == {}){
+        const initialProduct = {}
+        columns.map((column) => {
+            console.log(column)
+                 initialProduct[column.uid] = column.name
+                 return null
+            
+        })
+        console.log(initialProduct)
+    }
+  const [product, setProduct] = useState(selectedItemId ? selectedItemId : Object.assign({}, ...Object.keys(columns)
+  .filter(key => key !== 'ACCIONES')
+  .map(key => ({ [key]: columns[key] }))));
   
+  //console.log(product)
   const form = useRef(null);
   const router = useRouter();
   const params = useParams();
@@ -36,18 +50,23 @@ function productForm({columns, selectedItemId }) {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("name", product.name);
-    formData.append("price", product.price);
-    formData.append("description", product.description);
+    
+    for (let key in product) {
+        if (product.hasOwnProperty(key)) {
+          let value = product[key];
+          console.log(`Key: ${key}, Value: ${value}`);
+          formData.append(`${key}`, `${value}`);
+        }
+      }
 
     if (!params.id) {
-      const res = await axios.post("/api/products", formData, {
+      const res = await axios.post("/api/" + routingLink, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
     } else {
-      const res = await axios.put("/api/products/" + params.id, formData, {
+      const res = await axios.put("/api/" + routingLink + params.id, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         }
@@ -56,11 +75,11 @@ function productForm({columns, selectedItemId }) {
 
     form.current.reset();
     router.refresh();
-    router.push("/products");
+    router.push("/"+ routingLink);
   };
 
   return (<>
-                    {selectedItemId ? selectedItemId.map((item) => (
+                    {/*product.forEach(item => (
                         <Input
                           defaultValue={
                              item
@@ -69,15 +88,23 @@ function productForm({columns, selectedItemId }) {
                             item 
                           }
                           label={item}
-                          key={Object.keys(item)}
-                          type={Object.keys(item)}
+                          key={item[0]}
+                          name={item[0]}
                           size="md"
                           variant="bordered"
+                          onChange={handleChange}
                           required
                         />
-                      ))}
-  );
+                        )*/}
+  <Button
+  className="bg-foreground text-background"
+  endContent={<PlusIcon width={undefined} height={undefined} />}
+  size="sm" onClick={() => handleSubmit}
+>
+  Agregar
+</Button>
   </>
-}
+)
+                    }
 
 export default ProductForm;
