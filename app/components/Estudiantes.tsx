@@ -44,7 +44,8 @@ const statusColorMap: Record<string, ChipProps["color"]> = {
 };
 type User = (typeof users)[0];
 
-export default function Estudiantes() {
+export default function Estudiantes({estudiantesData, columns}) {
+  console.log(estudiantesData, columns)
   const [filterValue, setFilterValue] = React.useState("");
   const hasSearchFilter = Boolean(filterValue);
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -64,16 +65,16 @@ export default function Estudiantes() {
   }, []);
 
   const filteredItems = React.useMemo(() => {
-    let filteredUsers = [...users];
+    let filteredestudiantesData = [...estudiantesData];
 
     if (hasSearchFilter) {
-      filteredUsers = filteredUsers.filter((user) =>
-        user.name.toLowerCase().includes(filterValue.toLowerCase()),
+      filteredestudiantesData = filteredestudiantesData.filter((user) =>
+        user.nombre.toLowerCase().includes(filterValue.toLowerCase()),
       );
     }
 
-    return filteredUsers;
-  }, [users, filterValue]);
+    return filteredestudiantesData;
+  }, [estudiantesData, filterValue]);
 
   const renderCell = React.useCallback((user: User, columnKey: React.Key) => {
     const cellValue = user[columnKey as keyof User];
@@ -214,7 +215,7 @@ export default function Estudiantes() {
     }),
     [],
   );
-  //creando el efecto de pop-up al hacer click
+  /*creando el efecto de pop-up al hacer click
   const popUp = React.useMemo(() => {
     return (
       <PopoverContent className="w-[250px]">
@@ -232,7 +233,7 @@ export default function Estudiantes() {
       </PopoverContent>
     );
   }, []);
-
+*/
   return (
     <>
       <Table

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { conn } from "@/libs/mysql";
 
-export function GET() {
+export async function GET() {
   try {
     const results = await conn.query("SELECT * FROM estudiantes");
     return NextResponse.json(results);
@@ -37,6 +37,7 @@ export async function POST(request) {
         nombre: data.get("nombre"),
         email: data.get("email"),
         cedula_de_identidad: data.get("cedula_de_identidad"),
+        telefono: data.get("telefono"),
         fecha_de_admision: data.get("fecha_de_admision")
       });
   
@@ -44,7 +45,7 @@ export async function POST(request) {
         nombre: data.get("nombre"),
         email: data.get("email"),
         cedula_de_identidad: data.get("cedula_de_identidad"),
-        fecha_de_admision: data.get("fecha_de_admision")
+        fecha_de_admision: data.get("fecha_de_admision"),
         id: result.insertId,
       });
     } catch (error) {

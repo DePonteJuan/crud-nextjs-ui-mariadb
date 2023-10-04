@@ -1,19 +1,20 @@
 import Estudiantes from "@/app/components/Estudiantes";
 import { conn } from "@/libs/mysql";
 
-let columnas = {};
+
+const columnas = [
+  {name: "NOMBRE", uid: "nombre"},
+  {name: "EMAIL", uid: "email"},
+  {name: "TELEFONO", uid: "telefono"},
+  {name: "CEDULA", uid: "cedula_de_identidad"},
+  {name: "FECHA_DE_ADMISION", uid: "fecha_de_admision"},
+  {name: "ACTIONS", uid: "actions"},
+];
 async function loadEstudiantes() {
   const estudiantes = await conn.query("SELECT * FROM estudiantes");
   return estudiantes;
 }
-loadEstudiantes().then((estudiantes) => {
-  Object.keys(estudiantes).forEach((key) => {
-    if (key !== "id") {
-      columnas["name"] = key.toUpperCase();
-      columnas["uid"] = key;
-    }
-  });
-});
+
 export const dynamic = "force-dynamic";
 
 async function EstudiantesPage() {
@@ -21,7 +22,7 @@ async function EstudiantesPage() {
 
   return (
     <div>
-      <Estudiantes data={estudiantes} key={estudiantes.id} columns={columnas} />
+      <Estudiantes estudiantesData={estudiantes}  columns={columnas} />
     </div>
   );
 }
