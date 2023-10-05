@@ -7,7 +7,7 @@ const columnas = [
   {name: "EMAIL", uid: "email"},
   {name: "TELEFONO", uid: "telefono"},
   {name: "CEDULA", uid: "cedula_de_identidad"},
-  {name: "FECHA_DE_ADMISION", uid: "fecha_de_admision"},
+  //{name: "FECHA_DE_ADMISION", uid: "fecha_de_admision"},
   {name: "ACCIONES", uid: "acciones"},
 ];
 async function loadEstudiantes() {

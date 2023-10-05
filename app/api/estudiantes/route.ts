@@ -22,7 +22,7 @@ export async function POST(request) {
     try {
       const data = await request.formData();
   
-      if (!data.get("name")) {
+      if (!data.get("nombre")) {
         return NextResponse.json(
           {
             message: "Name is required",
@@ -38,14 +38,14 @@ export async function POST(request) {
         email: data.get("email"),
         cedula_de_identidad: data.get("cedula_de_identidad"),
         telefono: data.get("telefono"),
-        fecha_de_admision: data.get("fecha_de_admision")
+        //fecha_de_admision: data.get("fecha_de_admision")
       });
   
       return NextResponse.json({
         nombre: data.get("nombre"),
         email: data.get("email"),
         cedula_de_identidad: data.get("cedula_de_identidad"),
-        fecha_de_admision: data.get("fecha_de_admision"),
+        //fecha_de_admision: data.get("fecha_de_admision"),
         id: result.insertId,
       });
     } catch (error) {

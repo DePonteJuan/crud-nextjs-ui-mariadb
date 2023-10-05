@@ -1,7 +1,10 @@
+import { NextResponse } from "next/server";
+import { conn } from "@/libs/mysql";
+
 export async function GET(request, { params }) {
     try {
-      const result = await conn.query("SELECT * FROM product WHERE id = ?", [
-        params.id,
+      const result = await conn.query("SELECT * FROM estudiantes WHERE id = ?", [
+        request.params.id,
       ]);
   
       if (result.length === 0) {
@@ -27,9 +30,10 @@ export async function GET(request, { params }) {
   }
   
   export async function DELETE(request, { params }) {
-    try {
-      const result = await conn.query("DELETE FROM product WHERE id = ?", [
-        params.id,
+    console.log(params.id)
+    try { 
+      const result = await conn.query("DELETE FROM estudiantes WHERE id = ?", [
+        params.id
       ]);
   
       if (result.affectedRows === 0) {
@@ -57,16 +61,19 @@ export async function GET(request, { params }) {
   }
   
   export async function PUT(request, { params }) {
+
     try {
       const data = await request.formData();
-      const image = data.get("image");
-      const updateData = {
-        name: data.get("name"),
-        price: data.get("price"),
-        description: data.get("description"),
+      const id = data.get("id")
+      const updateData = {  
+      nombre: data.get("nombre"),
+      email: data.get("email"),
+      telefono: data.get("telefono"),
+      cedula_de_identidad: data.get("cedula_de_identidad"),
+      //fecha_de_admision: data.get("fecha_de_admision"),
       };
   
-      if (!data.get("name")) {
+      if (!data.get("nombre")) {
         return NextResponse.json(
           {
             message: "Name is required",
@@ -77,38 +84,17 @@ export async function GET(request, { params }) {
         );
       }
   
-      if (image) {
-        const buffer = await processImage(image);
+    
   
-        const res = await new Promise((resolve, reject) => {
-          cloudinary.uploader
-            .upload_stream(
-              {
-                resource_type: "image",
-              },
-              async (err, result) => {
-                if (err) {
-                  console.log(err);
-                  reject(err);
-                }
-  
-                resolve(result);
-              }
-            )
-            .end(buffer);
-        });
-  
-        updateData.image = res.secure_url;
-  
-        const result = await conn.query("UPDATE product SET ? WHERE id = ?", [
+        const result = await conn.query("UPDATE estudiantes SET ? WHERE id = ?", [
           updateData,
-          params.id,
+          id,
         ]);
   
         if (result.affectedRows === 0) {
-          return NextResponse.json(
+          return Nextsponse.json(
             {
-              message: "Producto no encontrado",
+              message: "estudianteso no encontrado",
             },
             {
               status: 404,
@@ -116,13 +102,13 @@ export async function GET(request, { params }) {
           );
         }
   
-        const updatedProduct = await conn.query(
-          "SELECT * FROM product WHERE id = ?",
-          [params.id]
+        const updatedestudiantes = await conn.query(
+          "SELECT * FROM estudiantes WHERE id = ?",
+          [id]
         );
   
-        return NextResponse.json(updatedProduct[0]);
-      }
+        return NextResponse.json(updatedestudiantes[0]);
+      
     } catch (error) {
       console.log(error);
       return NextResponse.json(

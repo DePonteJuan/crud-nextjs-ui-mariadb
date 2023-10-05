@@ -37,16 +37,18 @@ import { SearchIcon } from "./icons/SearchIcon";
 import { VerticalDotsIcon } from "./icons/VerticalDotsIcon";
 import { conn } from "@/libs/mysql";
 import ProductForm from "./dataForm";
-
+import handleDeleteElementOfDatabase from "@/utils/handleDelete";
+import { useRouter } from "next/navigation";
 const statusColorMap: Record<string, ChipProps["color"]> = {
   student: "success",
   teacher: "danger",
   admin: "warning",
 };
-type User = (typeof users)[0];
 
 export default function Estudiantes({estudiantesData, columns}) {
+  type User = (typeof estudiantesData)[0];
   console.log(estudiantesData, columns)
+  const router = useRouter()
   const [filterValue, setFilterValue] = React.useState("");
   const hasSearchFilter = Boolean(filterValue);
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -76,14 +78,18 @@ export default function Estudiantes({estudiantesData, columns}) {
 
     return filteredestudiantesData;
   }, [estudiantesData, filterValue]);
+  const handleDelete = (selectedItem, routingLink) =>{
+    handleDeleteElementOfDatabase(selectedItem, routingLink, router)
+
+  }
 
   const renderCell = React.useCallback((user: User, columnKey: React.Key) => {
     const cellValue = user[columnKey as keyof User];
     switch (columnKey) {
-      case "name":
+      case "nombre":
         return (
           <User
-            avatarProps={{ radius: "full", size: "sm", src: user.avatar }}
+            avatarProps={{ radius: "full", size: "sm", src: "https://img.icons8.com/office/16/person-male-skin-type-4.png" }}
             classNames={{
               description: "text-default-500",
             }}
@@ -93,12 +99,12 @@ export default function Estudiantes({estudiantesData, columns}) {
             {user.email}
           </User>
         );
-      case "role":
+      case "cedula_de_identidad":
         return (
           <div className="flex flex-col">
             <p className="text-bold text-small capitalize">{cellValue}</p>
             <p className="text-bold text-tiny capitalize text-default-500">
-              {user.team}
+              {user.nombre}
             </p>
           </div>
         );
@@ -113,7 +119,7 @@ export default function Estudiantes({estudiantesData, columns}) {
             {cellValue}
           </Chip>
         );
-      case "actions":
+      case "acciones":
         return (
           <div className="relative flex justify-end items-center gap-2">
             <Dropdown className="bg-background border-1 border-default-200">
@@ -127,11 +133,11 @@ export default function Estudiantes({estudiantesData, columns}) {
                 </Button>
               </DropdownTrigger>
               <DropdownMenu>
-                <DropdownItem>
-                  <li onClick={() => handleDropdownSelect(user)}>Editar</li>
+                <DropdownItem
+                 onClick={() => handleDropdownSelect(user)}>Editar
                 </DropdownItem>
 
-                <DropdownItem>Eliminar</DropdownItem>
+                <DropdownItem onClick={() => handleDelete(user, "estudiantes/")}>Eliminar</DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </div>
@@ -171,26 +177,7 @@ export default function Estudiantes({estudiantesData, columns}) {
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-[250px]">
-                {/*columns.map((column) => (
-                  <>
-                    <Input
-                      defaultValue={""}
-                      label={column.name}
-                      key={column.uid}
-                      size="md"
-                      variant="bordered"
-                      required
-                    />
-                  </>
-                ))*/}
-                < ProductForm columns={columns} selectedItemId={selectedItemId} routingLink={"estudiantes/"}/>
-                <Button
-                  className="bg-foreground text-background"
-                  endContent={<PlusIcon width={undefined} height={undefined} />}
-                  size="sm"
-                >
-                  Agregar
-                </Button>
+                < ProductForm columns={columns} selectedItemId={null} routingLink={"estudiantes/"}/>
               </PopoverContent>
             </Popover>
           </div>
@@ -275,7 +262,8 @@ export default function Estudiantes({estudiantesData, columns}) {
             <>
               <ModalHeader className="flex flex-col gap-1">Editar</ModalHeader>
               <ModalBody>
-                {columns.map((column) => (
+                < ProductForm columns={columns} selectedItemId={selectedItemId} routingLink={"estudiantes/"}/>
+                {/*map((column) => (
                   <Input
                     defaultValue={
                       selectedItemId ? selectedItemId[column.uid] : ""
@@ -289,7 +277,7 @@ export default function Estudiantes({estudiantesData, columns}) {
                     variant="bordered"
                     required
                   />
-                ))}
+                  ))*/}
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="flat" onPress={onClose}>
