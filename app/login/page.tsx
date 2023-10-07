@@ -12,8 +12,7 @@ import Image from "next/image";
 import axios from "axios";
 import { Montserrat_Alternates } from "next/font/google";
 
-export default function Login(event) {
-  event.preventDefault();
+export default function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const handleSubmit = async () => {
