@@ -31,12 +31,12 @@ import {
   Link,
 } from "@nextui-org/react";
 import React, { useState } from "react";
-import { columns, users } from "./data";
-import { PlusIcon } from "./icons/PlusIcon";
-import { SearchIcon } from "./icons/SearchIcon";
-import { VerticalDotsIcon } from "./icons/VerticalDotsIcon";
+import { columns, users } from "../data";
+import { PlusIcon } from "../icons/PlusIcon";
+import { SearchIcon } from "../icons/SearchIcon";
+import { VerticalDotsIcon } from "../icons/VerticalDotsIcon";
 import { conn } from "@/libs/mysql";
-import ProductForm from "./dataForm";
+import ProductForm from "../dataForm";
 import handleDeleteElementOfDatabase from "@/utils/handleDelete";
 import { useRouter } from "next/navigation";
 const statusColorMap: Record<string, ChipProps["color"]> = {

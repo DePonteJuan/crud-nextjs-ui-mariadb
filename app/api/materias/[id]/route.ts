@@ -3,7 +3,7 @@ import { conn } from "@/libs/mysql";
 
 export async function GET(request, { params }) {
     try {
-      const result = await conn.query("SELECT * FROM estudiantes WHERE id = ?", [
+      const result = await conn.query("SELECT * FROM materias WHERE id = ?", [
         request.params.id,
       ]);
   
@@ -32,7 +32,7 @@ export async function GET(request, { params }) {
   export async function DELETE(request, { params }) {
     console.log(params.id)
     try { 
-      const result = await conn.query("DELETE FROM estudiantes WHERE id = ?", [
+      const result = await conn.query("DELETE FROM materias WHERE id = ?", [
         params.id
       ]);
   
@@ -66,11 +66,10 @@ export async function GET(request, { params }) {
       const data = await request.formData();
       const id = data.get("id")
       const updateData = {  
-      nombre: data.get("nombre"),
-      email: data.get("email"),
-      telefono: data.get("telefono"),
-      cedula_de_identidad: data.get("cedula_de_identidad"),
-      //fecha_de_admision: data.get("fecha_de_admision"),
+        nombre: data.get("nombre"),
+        email: data.get("profesor"),
+        unidad_credito: data.get("unidad_credito"),
+        semestre: data.get("semestre"),
       };
   
       if (!data.get("nombre")) {
@@ -86,7 +85,7 @@ export async function GET(request, { params }) {
   
     
   
-        const result = await conn.query("UPDATE estudiantes SET ? WHERE id = ?", [
+        const result = await conn.query("UPDATE materias SET ? WHERE id = ?", [
           updateData,
           id,
         ]);
@@ -94,7 +93,7 @@ export async function GET(request, { params }) {
         if (result.affectedRows === 0) {
           return NextResponse.json(
             {
-              message: "estudianteso no encontrado",
+              message: "materiaso no encontrado",
             },
             {
               status: 404,
@@ -102,12 +101,12 @@ export async function GET(request, { params }) {
           );
         }
   
-        const updatedestudiantes = await conn.query(
-          "SELECT * FROM estudiantes WHERE id = ?",
+        const updatedmaterias = await conn.query(
+          "SELECT * FROM materias WHERE id = ?",
           [id]
         );
   
-        return NextResponse.json(updatedestudiantes[0]);
+        return NextResponse.json(updatedmaterias[0]);
       
     } catch (error) {
       console.log(error);
