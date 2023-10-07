@@ -8,16 +8,27 @@ import slider4 from "./estilos/imagenes/slider4.jpg";
 
 
 import { useState } from "react";
+import Image from "next/image";
+import axios from "axios";
+import { Montserrat_Alternates } from "next/font/google";
 
-
-export default function Login() {
-    
+export default function Login(event) {
+  event.preventDefault();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const handleSubmit = async () => {
+      const data = {username: username, password: password}
+      const url ="/api/auth/"
+      console.log(data)
+      const response = await axios.get(url, {
+        params: data,
+      });
+      console.log(response)
+        
+        
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        console.log(username, password)
+    
+    
     };
 
     const usernameHandler =  (e) => {
@@ -34,7 +45,7 @@ export default function Login() {
       <h1 className="Title">HUMBOLDT CRUD</h1>
       <div className="loginBox">
         <center>
-          <img src={logo} className="Logo" alt="Logo sice" />
+          <Image src={logo} className="Logo" alt="Logo sice" />
         </center>
         <h1>Iniciar Sesión</h1>
         <form>
@@ -58,16 +69,16 @@ export default function Login() {
       <div className="sliderFrame">
         <ul>
           <li>
-            <img src={slider1} alt="" />
+            <Image src={slider1} alt="" />
           </li>
           <li>
-            <img src={slider2} alt="" />
+            <Image src={slider2} alt="" />
           </li>
           <li>
-            <img src={slider3} alt="" />
+            <Image src={slider3} alt="" />
           </li>
           <li>
-            <img src={slider4} alt="" />
+            <Image src={slider4} alt="" />
           </li>
         </ul>
       </div>
