@@ -1,4 +1,4 @@
-import Estudiantes from "@/app/components/Estudiantes";
+import Estudiantes from "@/app/components/Estudiantes/Estudiantes";
 import { conn } from "@/libs/mysql";
 
 
