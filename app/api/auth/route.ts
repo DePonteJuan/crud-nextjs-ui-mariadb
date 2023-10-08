@@ -1,9 +1,8 @@
 import { NextResponse } from "next/server";
 import { conn } from "@/libs/mysql";
 export async function GET(request, { query }) {
-    console.log(params)
     try {
-
+        console.log(query)
       const result = await conn.query( 
         'SELECT * FROM usuarios WHERE name = ? AND password = ?',[
         query.username,

@@ -5,7 +5,7 @@ import slider1 from "./estilos/imagenes/slider1.jpg";
 import slider2 from "./estilos/imagenes/slider2.jpg";
 import slider3 from "./estilos/imagenes/slider3.jpg";
 import slider4 from "./estilos/imagenes/slider4.jpg";
-
+import { useRouter } from 'next/router'
 
 import { useState } from "react";
 import Image from "next/image";
@@ -13,17 +13,20 @@ import axios from "axios";
 import { Montserrat_Alternates } from "next/font/google";
 
 export default function Login() {
+    const router = useRouter();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const handleSubmit = async () => {
+      (username === "admin" && password === "admin") ? router.push("/estudiantes") : alert("credenciales erroneas") 
+      /*
       const data = {username: username, password: password}
       const url ="/api/auth/"
       console.log(data)
       const response = await axios.get(url, {
-        params: data,
+        params: data
       });
       console.log(response)
-        
+        */
         
 
     
@@ -61,9 +64,9 @@ export default function Login() {
           />
           <input type="submit" onClick={handleSubmit} value="Ingresar" />
           
-          <a href="/login">¿Olvidó su contraseña?</a>
           <br />
         </form>
+          <a href="/login">¿Olvidó su contraseña?</a>
       </div>
       <div className="sliderFrame">
         <ul>
