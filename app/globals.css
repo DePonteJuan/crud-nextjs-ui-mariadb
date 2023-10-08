@@ -156,3 +156,7 @@
     margin-left: -300%;
   }
 }
+
+.menu {
+  float: left;
+}

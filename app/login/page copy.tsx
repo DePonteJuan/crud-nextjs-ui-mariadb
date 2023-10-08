@@ -9,6 +9,7 @@ import slider4 from "./estilos/imagenes/slider4.jpg";
 
 
 import { useState } from "react";
+import { Image } from "@nextui-org/react";
 
 
 export default function Login() {
@@ -35,7 +36,7 @@ export default function Login() {
       <h1 className={styles.Title}>HUMBOLDT CRUD</h1>
       <div className={styles.loginBox}>
         <center>
-          <img src={logo} className={styles.Logo} alt="Logo sice" />
+          <Image src={logo} className={styles.Logo} alt="Logo sice" />
         </center>
         <h1>Iniciar Sesión</h1>
         <form>
@@ -56,19 +57,19 @@ export default function Login() {
           <br />
         </form>
       </div>
-      <div class={styles.sliderFrame}>
+      <div className={styles.sliderFrame}>
         <ul>
           <li>
-            <img src={slider1} alt="" />
+            <Image src={slider1} alt="" />
           </li>
           <li>
-            <img src={slider2} alt="" />
+            <Image src={slider2} alt="" />
           </li>
           <li>
-            <img src={slider3} alt="" />
+            <Image src={slider3} alt="" />
           </li>
           <li>
-            <img src={slider4} alt="" />
+            <Image src={slider4} />
           </li>
         </ul>
       </div>
