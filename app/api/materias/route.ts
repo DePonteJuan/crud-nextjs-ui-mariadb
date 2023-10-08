@@ -35,7 +35,7 @@ export async function POST(request) {
   
       const result = await conn.query("INSERT INTO materias SET ?", {
         nombre: data.get("nombre"),
-        email: data.get("profesor"),
+        profesor: data.get("profesor"),
         unidad_credito: data.get("unidad_credito"),
         semestre: data.get("semestre"),
       });

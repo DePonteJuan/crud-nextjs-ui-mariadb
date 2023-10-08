@@ -136,7 +136,7 @@ export default function Materias({estudiantesData, columns}) {
                  onClick={() => handleDropdownSelect(user)}>Editar
                 </DropdownItem>
 
-                <DropdownItem onClick={() => handleDelete(user, "estudiantes/")}>Eliminar</DropdownItem>
+                <DropdownItem onClick={() => handleDelete(user, "materias/")}>Eliminar</DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </div>
@@ -176,7 +176,7 @@ export default function Materias({estudiantesData, columns}) {
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-[250px]">
-                < ProductForm columns={columns} selectedItemId={null} routingLink={"estudiantes/"}/>
+                < ProductForm columns={columns} selectedItemId={null} routingLink={"materias/"}/>
               </PopoverContent>
             </Popover>
           </div>
@@ -261,7 +261,7 @@ export default function Materias({estudiantesData, columns}) {
             <>
               <ModalHeader className="flex flex-col gap-1">Editar</ModalHeader>
               <ModalBody>
-                < ProductForm columns={columns} selectedItemId={selectedItemId} routingLink={"estudiantes/"}/>
+                < ProductForm columns={columns} selectedItemId={selectedItemId} routingLink={"materias/"}/>
                 {/*map((column) => (
                   <Input
                     defaultValue={

@@ -6,10 +6,11 @@ const columnas = [
   {name: "NOMBRE", uid: "nombre"},
   {name: "PROFESOR", uid: "profesor"},
   {name: "UNIDAD DE CREDITO", uid: "unidad_credito"},
-  {name: "CEDULA", uid: "semestre"},
+  {name: "SEMESTRE", uid: "semestre"},
+  {name: "ACCIONES", uid: "acciones"},
 ];
 async function loadEstudiantes() {
-  const estudiantes = await conn.query("SELECT * FROM estudiantes");
+  const estudiantes = await conn.query("SELECT * FROM materias");
   return estudiantes;
 }
 

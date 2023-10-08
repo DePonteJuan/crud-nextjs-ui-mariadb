@@ -67,7 +67,7 @@ export async function GET(request, { params }) {
       const id = data.get("id")
       const updateData = {  
         nombre: data.get("nombre"),
-        email: data.get("profesor"),
+        profesor: data.get("profesor"),
         unidad_credito: data.get("unidad_credito"),
         semestre: data.get("semestre"),
       };
