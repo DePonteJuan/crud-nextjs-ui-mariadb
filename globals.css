@@ -1,0 +1,290 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+.loginBox {
+  width: 500px;
+  height: 500px;
+  color: #000;
+  top: 20%;
+  margin: 100px;
+  box-sizing: border-box;
+  padding: 70px 30px;
+  float: left;
+}
+
+.loginBox .Logo {
+  width: 170px;
+  height: 170px;
+}
+
+.loginBox h1 {
+  margin: 0;
+  padding: 0 0 20px;
+  text-align: center;
+  font-size: 22px;
+}
+
+.loginBox label {
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+  display: block;
+}
+
+.loginBox input {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.loginBox input[type="text"],
+.loginBox input[type="password"] {
+  border: none;
+  border-bottom: 1px solid #000;
+  background: transparent;
+  outline: none;
+  height: 40px;
+  color: #000;
+  font-size: 16px;
+}
+
+.loginBox input[type="submit"] {
+  border: none;
+  outline: none;
+  height: 40px;
+  background: #b80f22;
+  color: #fff;
+  font-size: 18px;
+  border-radius: 20px;
+}
+
+.loginBox input[type="submit"]:hover {
+  cursor: pointer;
+  background: #ffc107;
+  color: #000;
+}
+
+.loginBox a {
+  text-decoration: none;
+  font-size: 12px;
+  line-height: 20px;
+  color: darkgrey;
+}
+
+.loginBox a:hover {
+  color: #fff;
+}
+
+.Title {
+  font-size: 100%;
+  color: #b80f22;
+}
+
+.sliderFrame {
+  background: #b80f22;
+  width: 700px;
+  height: 700px;
+  float: left;
+  left: 20%;
+  border-radius: 20px;
+}
+
+.sliderFrame {
+  width: 500px;
+  height: auto;
+  margin: 50px auto 0;
+  overflow: hidden;
+  border: 30px #b80f22;
+}
+
+.sliderFrame ul {
+  display: flex;
+  padding: 0;
+  width: 400%;
+  animation: slide 16s infinite alternate ease-in-out;
+}
+
+.sliderFrame li {
+  list-style: none;
+  width: 100%;
+}
+
+.sliderFrame img {
+  width: 100%;
+  border-radius: 20px;
+}
+
+@keyframes slide {
+  0% {
+    margin-left: 0%;
+  }
+  20% {
+    margin-left: 0%;
+  }
+
+  25% {
+    margin-left: -100%;
+  }
+  45% {
+    margin-left: -100%;
+  }
+
+  50% {
+    margin-left: -200%;
+  }
+  70% {
+    margin-left: -200%;
+  }
+
+  75% {
+    margin-left: -300%;
+  }
+  95% {
+    margin-left: -300%;
+  }
+}
+
+/*estilo del menu*/
+.menu {
+  background-color: #EA6C51;
+  width: 230px;
+  float: left;
+  top: 0;
+  position: absolute;
+  height: 100%;
+  position: absolute;
+}
+
+.logos {
+  text-align: center;
+  border-bottom: solid 1px var(--hovercolor);
+  padding: var(--padding) 0;
+}
+
+.logos img {
+  width: 150px;
+  height: auto;
+  box-sizing: border-box;
+  padding: var(--padding);
+  margin: 15px;
+  border-radius: 50%;
+}
+
+.titulo {
+  font-size: 14px;
+  vertical-align: middle;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.Inicio img {
+  width: 27px;
+  vertical-align: middle;
+  overflow: hidden;
+  display: inline-block;
+  margin: 10px;
+}
+
+.Docentes img {
+  width: 27px;
+  overflow: hidden;
+  vertical-align: middle;
+  display: inline-block;
+  margin: 10px;
+}
+
+.Estudiantes img {
+  width: 27px;
+  vertical-align: middle;
+  overflow: hidden;
+  display: inline-block;
+  margin: 10px;
+}
+
+.Materias img {
+  width: 27px;
+  vertical-align: middle;
+  overflow: hidden;
+  display: inline-block;
+  margin: 10px;
+}
+
+.Secciones img{
+  width: 27px;
+  display: inline-block;
+  vertical-align: middle;
+  overflow: hidden;
+  margin: 10px;
+}
+
+.Periodo img {
+  width: 27px;
+  display: inline-block;
+  vertical-align: middle;
+  overflow: hidden;
+  margin: 10px;
+}
+
+.Usuarios img {
+  width: 27px;
+  display: inline-block;
+  vertical-align: middle;
+  overflow: hidden;
+  margin: 10px;
+}
+
+.menu a h2 {
+  font-weight: 600;
+}
+
+.menu a {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+  width: 150px;
+}
+
+.menu a :hover {
+  background-color: rgb(94, 5, 5);
+  border-radius: 3px;
+  color: #fff;
+}
+
+.menu a h2 :hover {
+  font-weight: 650;
+}
+
+.title h1 {
+  font-size: 20px;
+  color: rgba(75, 2, 2, 0.979);
+  margin: 7px;
+  font-weight: 600;
+}
+
+.opciones {
+  margin: 10px;
+}
+
+
+/*estilos de la tabla*/
+
+.tabla {
+  width: 1350px;
+  padding: 0px;
+  margin: 5px;
+  float: right;
+  
+}
