@@ -5,7 +5,7 @@ import slider1 from "./estilos/imagenes/slider1.jpg";
 import slider2 from "./estilos/imagenes/slider2.jpg";
 import slider3 from "./estilos/imagenes/slider3.jpg";
 import slider4 from "./estilos/imagenes/slider4.jpg";
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 
 import { useState } from "react";
 import Image from "next/image";
@@ -16,8 +16,10 @@ export default function Login() {
     const router = useRouter();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const handleSubmit = async () => {
-      (username === "admin" && password === "admin") ? router.push("/estudiantes") : alert("credenciales erroneas") 
+    const handleSubmit = (event) => {
+      
+    event.preventDefault();
+      (username == 'admin' && password == 'admin') ? window.location.href = "/estudiantes" : alert("credenciales erroneas") 
       /*
       const data = {username: username, password: password}
       const url ="/api/auth/"
