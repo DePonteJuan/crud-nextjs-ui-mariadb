@@ -15,16 +15,31 @@ function ProductForm({columns, selectedItemId,  routingLink}) {
 
   const [product, setProduct] = useState(selectedItemId ? selectedItemId : transformedColumns);
   
+
+  const [isFormValid, setIsFormValid] = useState(false); // New state variable
   console.log(product)
   const form = useRef(null);
   const router = useRouter();
   
   const handleChange = (e) => {
-    setProduct({
-      ...product,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+
+    // Validate the input value
+    const isValid = validateInput(name, value);
+
+    setProduct((prevProduct) => ({
+      ...prevProduct,
+      [name]: value,
+      [`${name}IsValid`]: isValid,
+    }));
   };
+  useEffect(() => {
+    // Check if all inputs are valid
+    const isValid = Object.keys(product).every((key) =>
+      key.endsWith("IsValid") ? product[key] : true
+    );
+    setIsFormValid(isValid);
+  }, [product]);
   /*
   useEffect(() => {
     if (params.id) {
@@ -40,6 +55,23 @@ function ProductForm({columns, selectedItemId,  routingLink}) {
       }
     }, []);
     */
+   const validateInput = (property, value) =>{
+    //console.log(value)
+    const regexValues = [
+      { property: 'nombre', regex: /^[A-Za-z\s]+$/ },
+      { property: 'email', regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/ },
+      { property: 'telefono', regex: /^\d{3}-\d{3}-\d{4}$/ },
+      { property: 'cedula_de_identidad', regex: /^v\d{8}$/ }
+    ];
+    
+const foundObject = regexValues.find(obj => {
+  return obj['property'] === property;
+});
+//console.log(foundObject)
+const foundRegex = foundObject ? foundObject['regex'] : null;
+console.log(foundRegex)
+return foundRegex?.test(value)
+   }
   const handleSubmit = async (e) => {
     e.preventDefault();
      
@@ -74,36 +106,40 @@ function ProductForm({columns, selectedItemId,  routingLink}) {
   };
 
   return (<>
-    <form>
-    {Object.entries(product).map(([property, value]) => (
-      (property === 'id') ? (
-         <></>
-      ) :
-      (property === 'fecha_de_admision') ? (
-        <Input
-          defaultValue={value}
-          placeholder={property}
-          type="date"
-          id={property}
-          name={property}
-          size="md"
-          variant="bordered"
-          onChange={handleChange}
-        />
-      ) : (
-        <Input
-          defaultValue={value}
-          placeholder={property}
-          type="text"
-          id={property}
-          name={property}
-          size="md"
-          variant="bordered"
-          onChange={handleChange}
-        />
-      )
-      ))}
-  </form>
+    <form className="p-1">
+        {Object.entries(product).map(([property, value]) =>
+          property === "id" || property.endsWith("IsValid") ? (
+            <></>
+          ) : property === "fecha_de_admision" ? (
+            <Input
+              defaultValue={value as any}
+              placeholder={property}
+              type="date"
+              id={property}
+              name={property}
+              size="md"
+              variant="bordered"
+              onChange={handleChange}
+            />
+          ) : (
+            <Input
+              defaultValue={value as any}
+              placeholder={property}
+              type="text"
+              id={property}
+              name={property}
+              size="md"
+              variant="bordered"
+              onChange={handleChange}
+              isInvalid={!product[`${property}IsValid`]}
+              color={product[`${property}IsValid`] ? "success" : "danger"}
+              errorMessage={
+                !product[`${property}IsValid`] && "Please enter a valid value"
+              }
+            />
+          )
+        )}
+      </form>
 
                     {
                     /*
@@ -139,9 +175,10 @@ function ProductForm({columns, selectedItemId,  routingLink}) {
                         />
                         )})*/}
   <Button
-  className="bg-foreground text-background"
+  className="bg-foreground text-background my-4"
   endContent={<PlusIcon width={undefined} height={undefined} />}
-  size="sm" onClick={handleSubmit}
+  size="sm" onClick={handleSubmit}  
+  isDisabled={isFormValid === false}
 >
   Agregar
 </Button>
