@@ -45,7 +45,7 @@ const statusColorMap: Record<string, ChipProps["color"]> = {
   admin: "warning",
 };
 
-export default function Estudiantes({estudiantesData, columns}) {
+export default function Docentes({estudiantesData, columns}) {
   type User = (typeof estudiantesData)[0];
   console.log(estudiantesData, columns)
   const router = useRouter()
@@ -104,7 +104,7 @@ export default function Estudiantes({estudiantesData, columns}) {
           <div className="flex flex-col">
             <p className="text-bold text-small capitalize">{cellValue}</p>
             <p className="text-bold text-tiny capitalize text-default-500">
-              {user.nombre}
+              {user.nombre} {user.apellido}
             </p>
           </div>
         );

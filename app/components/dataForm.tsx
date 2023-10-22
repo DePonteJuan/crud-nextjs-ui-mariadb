@@ -61,6 +61,11 @@ function ProductForm({columns, selectedItemId,  routingLink}) {
       { property: 'nombre', regex: /^[A-Za-z\s]+$/ },
       { property: 'email', regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/ },
       { property: 'telefono', regex: /^\d{3}-\d{3}-\d{4}$/ },
+      { property: 'semestre', regex: /^[1-9]|10$/ },
+      { property: 'unidad_credito', regex: /^[1-6]$/ },
+      { property: 'periodo', regex: /^(20[0-9]{2}|2100)-(I|II|III)$/ },
+      { property: 'profesor', regex: /^[A-Za-z\s]+$/},
+      { property: 'apellido', regex: /^[A-Za-z\s]+$/},
       { property: 'cedula_de_identidad', regex: /^v\d{8}$/ }
     ];
     
@@ -123,8 +128,9 @@ return foundRegex?.test(value)
             />
           ) : (
             <Input
+              className="mb-2"
               defaultValue={value as any}
-              placeholder={property}
+              label={property}
               type="text"
               id={property}
               name={property}

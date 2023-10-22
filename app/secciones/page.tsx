@@ -9,7 +9,7 @@ const columnas = [
   {name: "SEMESTRE", uid: "semestre"},
   {name: "ACCIONES", uid: "acciones"},
 ];
-async function loadEstudiantes() {
+async function initialFetchDataFromDatabase() {
   const estudiantes = await conn.query("SELECT * FROM materias");
   return estudiantes;
 }
@@ -17,7 +17,7 @@ async function loadEstudiantes() {
 export const dynamic = "force-dynamic";
 
 async function EstudiantesPage() {
-  const estudiantes = await loadEstudiantes();
+  const estudiantes = await initialFetchDataFromDatabase();
 
   return (
     <div>

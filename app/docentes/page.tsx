@@ -1,27 +1,27 @@
 import { conn } from "@/libs/mysql";
-import Materias from "../components/Materias/Materias";
 import Image from "next/image";
+import Docentes from "../components/Docentes/Docentes";
 
 const columnas = [
   {name: "NOMBRE", uid: "nombre"},
   {name: "APELLIDO", uid: "apellido"},
+  {name: "EMAIL", uid: "email"},
   {name: "TELEFONO", uid: "telefono"},
-  {name: "DIRECCION", uid: "direccion"},
-  {name: "ID-CARGO", uid: "id-cargo"},
+  {name: "ACCIONES", uid: "acciones"},
 ];
-async function loadEstudiantes() {
-  const estudiantes = await conn.query("SELECT * FROM materias");
+async function initialFetchDataFromDatabase() {
+  const estudiantes = await conn.query("SELECT * FROM docentes");
   return estudiantes;
 }
 
 export const dynamic = "force-dynamic";
 
 async function EstudiantesPage() {
-  const estudiantes = await loadEstudiantes();
+  const estudiantes = await initialFetchDataFromDatabase();
 
   return (
     <div>
-      <div className="tabla"><Materias estudiantesData={estudiantes}  columns={columnas} /></div>
+      <div className="tabla"><Docentes estudiantesData={estudiantes}  columns={columnas} /></div>
 
       <div className="menu">
 
@@ -31,22 +31,22 @@ async function EstudiantesPage() {
 <div id="opciones">
   <div className=" Inicio">
     <Image src="/home.png" alt="" width={27} height={27}/>
-    <a className="titulo" href="#"><h2>Inicio</h2></a>
+    <a className="titulo" href="/"><h2>Inicio</h2></a>
   </div>
 
   <div className="Docentes">
     <Image src="/save.png" alt={""} width={27} height={27}/>
-    <a className="titulo" href="#"><h2>Docentes</h2></a>
+    <a className="titulo" href="/docentes"><h2>Docentes</h2></a>
   </div>
 
   <div className="Estudiantes">
     <Image src="/student.png" alt={""} width={27} height={27}/>
-    <a className="titulo" href="#"><h2>Estudiante</h2></a>
+    <a className="titulo" href="/estudiantes"><h2>Estudiante</h2></a>
   </div>
 
   <div className="Materias">
     <Image src="/materias.png" alt={""} width={27} height={27}/>
-    <a className="titulo" href="#"><h2>Materias</h2></a>
+    <a className="titulo" href="/materias"><h2>Materias</h2></a>
   </div>
 
   <div className="Secciones">
@@ -56,7 +56,7 @@ async function EstudiantesPage() {
 
   <div className="Periodo">
     <Image src="/materias.png" alt={""} width={27} height={27}/>
-    <a className="titulo" href="#"><h2>Periodo</h2></a>
+    <a className="titulo" href="/periodos"><h2>Periodos</h2></a>
   </div>
 
   <div className="Usuarios">

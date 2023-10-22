@@ -3,7 +3,7 @@ import { conn } from "@/libs/mysql";
 
 export async function GET(request, { params }) {
     try {
-      const result = await conn.query("SELECT * FROM estudiantes WHERE id = ?", [
+      const result = await conn.query("SELECT * FROM docentes WHERE id = ?", [
         request.params.id,
       ]);
   
@@ -32,7 +32,7 @@ export async function GET(request, { params }) {
   export async function DELETE(request, { params }) {
     console.log(params.id)
     try { 
-      const result = await conn.query("DELETE FROM estudiantes WHERE id = ?", [
+      const result = await conn.query("DELETE FROM docentes WHERE id = ?", [
         params.id
       ]);
   
@@ -86,7 +86,7 @@ export async function GET(request, { params }) {
   
     
   
-        const result = await conn.query("UPDATE estudiantes SET ? WHERE id = ?", [
+        const result = await conn.query("UPDATE docentes SET ? WHERE id = ?", [
           updateData,
           id,
         ]);
@@ -94,7 +94,7 @@ export async function GET(request, { params }) {
         if (result.affectedRows === 0) {
           return NextResponse.json(
             {
-              message: "estudianteso no encontrado",
+              message: "docenteso no encontrado",
             },
             {
               status: 404,
@@ -102,12 +102,12 @@ export async function GET(request, { params }) {
           );
         }
   
-        const updatedestudiantes = await conn.query(
-          "SELECT * FROM estudiantes WHERE id = ?",
+        const updateddocentes = await conn.query(
+          "SELECT * FROM docentes WHERE id = ?",
           [id]
         );
   
-        return NextResponse.json(updatedestudiantes[0]);
+        return NextResponse.json(updateddocentes[0]);
       
     } catch (error) {
       console.log(error);
