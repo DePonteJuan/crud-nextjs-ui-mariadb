@@ -177,7 +177,7 @@ export default function Docentes({estudiantesData, columns}) {
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-[250px]">
-                < ProductForm columns={columns} selectedItemId={null} routingLink={"estudiantes/"}/>
+                < ProductForm columns={columns} selectedItemId={null} routingLink={"docentes/"}/>
               </PopoverContent>
             </Popover>
           </div>

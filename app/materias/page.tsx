@@ -37,7 +37,7 @@ async function EstudiantesPage() {
 
   <div className="Docentes">
     <Image src="/save.png" alt={""} width={27} height={27}/>
-    <a className="titulo" href="#"><h2>Docentes</h2></a>
+    <a className="titulo" href="/docentes"><h2>Docentes</h2></a>
   </div>
 
   <div className="Estudiantes">
@@ -57,7 +57,7 @@ async function EstudiantesPage() {
 
   <div className="Periodo">
     <Image src="/materias.png" alt={""} width={27} height={27}/>
-    <a className="titulo" href="#"><h2>Periodo</h2></a>
+    <a className="titulo" href="/periodos"><h2>Periodo</h2></a>
   </div>
 
   <div className="Usuarios">

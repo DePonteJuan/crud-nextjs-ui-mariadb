@@ -7,6 +7,7 @@ const columnas = [
   {name: "APELLIDO", uid: "apellido"},
   {name: "EMAIL", uid: "email"},
   {name: "TELEFONO", uid: "telefono"},
+  {name: "CEDULA", uid: "cedula_de_identidad"},
   {name: "ACCIONES", uid: "acciones"},
 ];
 async function initialFetchDataFromDatabase() {

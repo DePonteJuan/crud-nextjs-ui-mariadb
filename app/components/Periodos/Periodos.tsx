@@ -45,7 +45,7 @@ const statusColorMap: Record<string, ChipProps["color"]> = {
   admin: "warning",
 };
 
-export default function Docentes({estudiantesData, columns}) {
+export default function Periodos({estudiantesData, columns}) {
   type User = (typeof estudiantesData)[0];
   console.log(estudiantesData, columns)
   const router = useRouter()
@@ -132,12 +132,12 @@ export default function Docentes({estudiantesData, columns}) {
                   />
                 </Button>
               </DropdownTrigger>
-              <DropdownMenu>
+              <DropdownMenu aria-label="Opciones del menú">
                 <DropdownItem
                  onClick={() => handleDropdownSelect(user)}  key={Math.random().toString(36).substring(7)}>Editar
                 </DropdownItem>
 
-                <DropdownItem onClick={() => handleDelete(user, "estudiantes/")}  key={Math.random().toString(36).substring(7)}>Eliminar</DropdownItem>
+                <DropdownItem onClick={() => handleDelete(user, "periodos/")}  key={Math.random().toString(36).substring(7)}>Eliminar</DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </div>
@@ -172,12 +172,13 @@ export default function Docentes({estudiantesData, columns}) {
                   className="bg-foreground text-background"
                   endContent={<PlusIcon width={undefined} height={undefined} />}
                   size="sm"
+                  aria-label="popover"
                 >
                   Agregar
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-[250px]">
-                < ProductForm columns={columns} selectedItemId={null} routingLink={"estudiantes/"}/>
+                < ProductForm columns={columns} selectedItemId={null} routingLink={"periodos/"}/>
               </PopoverContent>
             </Popover>
           </div>
@@ -262,7 +263,7 @@ export default function Docentes({estudiantesData, columns}) {
             <>
               <ModalHeader className="flex flex-col gap-1">Editar</ModalHeader>
               <ModalBody>
-                < ProductForm columns={columns} selectedItemId={selectedItemId} routingLink={"estudiantes/"}/>
+                < ProductForm columns={columns} selectedItemId={selectedItemId} routingLink={"periodos/"}/>
                 {/*map((column) => (
                   <Input
                     defaultValue={

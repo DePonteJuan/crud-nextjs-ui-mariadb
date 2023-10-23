@@ -45,6 +45,7 @@ export async function POST(request) {
         nombre: data.get("nombre"),
         email: data.get("email"),
         cedula_de_identidad: data.get("cedula_de_identidad"),
+        telefono: data.get("telefono"),
         //fecha_de_admision: data.get("fecha_de_admision"),
         id: result.insertId,
       });

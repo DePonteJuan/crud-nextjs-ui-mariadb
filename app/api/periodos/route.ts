@@ -3,7 +3,7 @@ import { conn } from "@/libs/mysql";
 
 export async function GET() {
   try {
-    const results = await conn.query("SELECT * FROM docentes");
+    const results = await conn.query("SELECT * FROM periodos");
     return NextResponse.json(results);
   } catch (error) {
     console.log(error);
@@ -22,7 +22,7 @@ export async function POST(request) {
     try {
       const data = await request.formData();
   
-      if (!data.get("nombre")) {
+      if (!data.get("periodo")) {
         return NextResponse.json(
           {
             message: "Name is required",
@@ -33,20 +33,13 @@ export async function POST(request) {
         );
       }
   
-      const result = await conn.query("INSERT INTO docentes SET ?", {
-        nombre: data.get("nombre"),
-        email: data.get("email"),
-        cedula_de_identidad: data.get("cedula_de_identidad"),
-        telefono: data.get("telefono"),
-      apellido: data.get("apellido"),
+      const result = await conn.query("INSERT INTO periodos SET ?", {
+        
+        periodo: data.get("periodo"),
       });
   
       return NextResponse.json({
-        nombre: data.get("nombre"),
-        email: data.get("email"),
-        cedula_de_identidad: data.get("cedula_de_identidad"),
-        telefono: data.get("telefono"),
-      apellido: data.get("apellido"),
+        periodo: data.get("periodo"),
         id: result.insertId,
       });
     } catch (error) {

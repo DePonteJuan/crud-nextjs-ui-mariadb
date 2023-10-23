@@ -1,14 +1,13 @@
 import { conn } from "@/libs/mysql";
-import Materias from "../components/Materias/Materias";
+import Periodos from "../components/Periodos/Periodos";
 import Image from "next/image";
 
 const columnas = [
-  {name: "ID", uid: "id"},
   {name: "PERIODO", uid: "periodo"},
   {name: "ACCIONES", uid: "acciones"},
 ];
 async function initialFetchDataFromDatabase() {
-  const estudiantes = await conn.query("SELECT * FROM materias");
+  const estudiantes = await conn.query("SELECT * FROM periodos");
   return estudiantes;
 }
 
@@ -19,7 +18,7 @@ async function EstudiantesPage() {
 
   return (
     <div>
-      <div className="tabla"><Materias estudiantesData={estudiantes}  columns={columnas} /></div>
+      <div className="tabla"><Periodos estudiantesData={estudiantes}  columns={columnas} /></div>
 
       <div className="menu">
 
@@ -34,17 +33,17 @@ async function EstudiantesPage() {
 
   <div className="Docentes">
     <Image src="/save.png" alt={""} width={27} height={27}/>
-    <a className="titulo" href="#"><h2>Docentes</h2></a>
+    <a className="titulo" href="/docentes"><h2>Docentes</h2></a>
   </div>
 
   <div className="Estudiantes">
     <Image src="/student.png" alt={""} width={27} height={27}/>
-    <a className="titulo" href="#"><h2>Estudiante</h2></a>
+    <a className="titulo" href="/estudiantes"><h2>Estudiante</h2></a>
   </div>
 
   <div className="Materias">
     <Image src="/materias.png" alt={""} width={27} height={27}/>
-    <a className="titulo" href="#"><h2>Materias</h2></a>
+    <a className="titulo" href="/materias"><h2>Materias</h2></a>
   </div>
 
   <div className="Secciones">
@@ -54,7 +53,7 @@ async function EstudiantesPage() {
 
   <div className="Periodo">
     <Image src="/materias.png" alt={""} width={27} height={27}/>
-    <a className="titulo" href="#"><h2>Periodo</h2></a>
+    <a className="titulo" href="/periodos"><h2>Periodos</h2></a>
   </div>
 
   <div className="Usuarios">

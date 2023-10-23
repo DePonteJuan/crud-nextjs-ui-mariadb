@@ -3,7 +3,7 @@ import { conn } from "@/libs/mysql";
 
 export async function GET(request, { params }) {
     try {
-      const result = await conn.query("SELECT * FROM docentes WHERE id = ?", [
+      const result = await conn.query("SELECT * FROM periodos WHERE id = ?", [
         request.params.id,
       ]);
   
@@ -32,7 +32,7 @@ export async function GET(request, { params }) {
   export async function DELETE(request, { params }) {
     console.log(params.id)
     try { 
-      const result = await conn.query("DELETE FROM docentes WHERE id = ?", [
+      const result = await conn.query("DELETE FROM periodos WHERE id = ?", [
         params.id
       ]);
   
@@ -66,18 +66,14 @@ export async function GET(request, { params }) {
       const data = await request.formData();
       const id = data.get("id")
       const updateData = {  
-      nombre: data.get("nombre"),
-      apellido: data.get("apellido"),
-      email: data.get("email"),
-      telefono: data.get("telefono"),
-      cedula_de_identidad: data.get("cedula_de_identidad"),
-      //fecha_de_admision: data.get("fecha_de_admision"),
+        
+        periodo: data.get("periodo"),
       };
   
-      if (!data.get("nombre")) {
+      if (!data.get("periodo")) {
         return NextResponse.json(
           {
-            message: "Name is required",
+            message: "periodo is required",
           },
           {
             status: 400,
@@ -87,7 +83,7 @@ export async function GET(request, { params }) {
   
     
   
-        const result = await conn.query("UPDATE docentes SET ? WHERE id = ?", [
+        const result = await conn.query("UPDATE periodos SET ? WHERE id = ?", [
           updateData,
           id,
         ]);
@@ -95,7 +91,7 @@ export async function GET(request, { params }) {
         if (result.affectedRows === 0) {
           return NextResponse.json(
             {
-              message: "docenteso no encontrado",
+              message: "periodoso no encontrado",
             },
             {
               status: 404,
@@ -103,12 +99,12 @@ export async function GET(request, { params }) {
           );
         }
   
-        const updateddocentes = await conn.query(
-          "SELECT * FROM docentes WHERE id = ?",
+        const updatedperiodos = await conn.query(
+          "SELECT * FROM periodos WHERE id = ?",
           [id]
         );
   
-        return NextResponse.json(updateddocentes[0]);
+        return NextResponse.json(updatedperiodos[0]);
       
     } catch (error) {
       console.log(error);
